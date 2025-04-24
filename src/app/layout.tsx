@@ -8,10 +8,10 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
 export const metadata: Metadata = {
   title: "GPT Chat",
@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistMono.className} dark px-2 md:px-5`}>
+      <body className={`${geistSans.className} dark px-2 md:px-5`}>
         <header className="text-white font-bold bg-green-900 text-2xl p-2 mb-3 rounded-b-lg flex">
           <div className="flex flex-grow">
             <Link href="/">GPT Chat</Link>
