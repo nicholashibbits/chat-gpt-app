@@ -24,8 +24,8 @@ export default function RootLayout({
     <Session>
       <html lang="en">
         <body className={`${geistSans.className} dark px-2 md:px-5`}>
-          <header className="flex">
-            <div className="flex flex-grow">
+          <header className="flex bg-green-500 px-5 rounded-lg">
+            <div className="flex flex-grow items-center">
               <Link href="/">GPT Chat</Link>
               <Link href="/about" className="ml-5 font-light">
                 About
