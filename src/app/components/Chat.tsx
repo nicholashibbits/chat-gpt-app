@@ -46,7 +46,7 @@ export default function Chat() {
           </div>
         </div>
       ))}
-      <div className="flex border-t-2 border-t-gray-500 pt-3 mt-3">
+      <div className="flex pt-3 mt-3">
         <Input
           className="flex-grow text-xl"
           placeholder="Question"
