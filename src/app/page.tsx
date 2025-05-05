@@ -1,8 +1,19 @@
 import { Separator } from "@/components/ui/separator";
 import { getServerSession } from "next-auth";
+import Chat from "./components/Chat";
+import { neon } from "@neondatabase/serverless";
 
 export default async function Home() {
   const session = await getServerSession();
+  const db = neon(`${process.env.DATABASE_URL}`);
+
+  async function getData() {
+    const sql = neon(`${process.env.DATABASE_URL}`);
+    const response = await sql`SELECT * FROM chats`;
+    return response;
+  }
+
+  const data = await getData();
 
   return (
     <main className="p-5">
@@ -15,6 +26,7 @@ export default async function Home() {
       {session?.user?.name && (
         <>
           <Separator className="my-5" />
+          <Chat />
         </>
       )}
     </main>
