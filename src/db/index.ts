@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 
-import type { Chat, ChatWithMessages, Message} from "../types";
+import type { Chat, ChatWithMessages, Message } from "../types";
 
 export async function createChat(
   userEmail: string,
@@ -73,4 +73,11 @@ export async function getMessages(chatId: number) {
     role: msg.role as "user" | "assistant",
     content: msg.content,
   }));
+}
+
+export async function updateChat(chatId: number, msgs: Message[]) {
+  await sql`DELETE FROM messages WHERE chat_id = ${chatId}`;
+  for (const msg of msgs) {
+    await sql`INSERT INTO messages (chat_id, role, content) VALUES (${chatId}, ${msg.role}, ${msg.content})`;
+  }
 }

@@ -1,11 +1,14 @@
 "use server";
 import OpenAI from "openai";
+import { getServerSession } from "next-auth";
+import { createChat, updateChat } from "@/db";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,
 });
 
 export async function getCompletion(
+  id: number | null,
   messageHistory: {
     role: "user" | "assistant";
     content: string;
@@ -24,7 +27,22 @@ export async function getCompletion(
     },
   ];
 
+  const session = await getServerSession();
+  console.log(session);
+
+  let chatId = id;
+  if (!chatId) {
+    chatId = await createChat(
+      session?.user?.email!,
+      messageHistory[0].content,
+      messages
+    );
+  } else {
+    await updateChat(chatId, messages);
+  }
+
   return {
     messages,
+    id: chatId,
   };
 }
