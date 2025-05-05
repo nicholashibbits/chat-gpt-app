@@ -1,10 +1,8 @@
 import { Separator } from "@/components/ui/separator";
 import { getServerSession } from "next-auth";
-import { supabase } from "@/lib/supabase";
 
 export default async function Home() {
   const session = await getServerSession();
-  let { data: messages } = await supabase.from("messages").select("*");
 
   return (
     <main className="p-5">
