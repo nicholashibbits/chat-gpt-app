@@ -21,7 +21,7 @@ export async function createChat(
 }
 
 export async function getChat(
-  chatId: number
+  chatId: string
 ): Promise<ChatWithMessages | null> {
   const { rows: chats } = await sql`SELECT * FROM chats WHERE id = ${chatId}`;
   if (!chats[0]) {
@@ -64,7 +64,7 @@ export async function getChatsWithMessages(
   return chats as ChatWithMessages[];
 }
 
-export async function getMessages(chatId: number) {
+export async function getMessages(chatId: string) {
   const { rows: messages } =
     await sql`SELECT * FROM messages WHERE chat_id = ${chatId}`;
 
@@ -75,7 +75,7 @@ export async function getMessages(chatId: number) {
   }));
 }
 
-export async function updateChat(chatId: number, msgs: Message[]) {
+export async function updateChat(chatId: string, msgs: Message[]) {
   await sql`DELETE FROM messages WHERE chat_id = ${chatId}`;
   for (const msg of msgs) {
     await sql`INSERT INTO messages (chat_id, role, content) VALUES (${chatId}, ${msg.role}, ${msg.content})`;

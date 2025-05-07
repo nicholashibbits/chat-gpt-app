@@ -8,7 +8,7 @@ const openai = new OpenAI({
 });
 
 export async function getCompletion(
-  id: number | null,
+  id: string | null,
   messageHistory: {
     role: "user" | "assistant";
     content: string;
@@ -28,7 +28,6 @@ export async function getCompletion(
   ];
 
   const session = await getServerSession();
-  console.log(session);
 
   let chatId = id;
   if (!chatId) {
