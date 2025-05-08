@@ -1,23 +1,15 @@
-import OpenAI from "openai";
-import { OpenAIStream } from "ai/stream";
-import { StreamingTextResponse } from "ai/server";
+import { openai } from "@ai-sdk/openai";
+import { streamText } from "ai";
 
 export const runtime = "edge";
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!,
-});
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
-  const response = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
-    stream: true,
+  const result = await streamText({
+    model: openai("gpt-3.5-turbo"),
     messages,
   });
 
-  const stream = OpenAIStream(response);
-
-  return new StreamingTextResponse(stream);
+  return result.toDataStreamResponse();
 }
