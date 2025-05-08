@@ -2,6 +2,7 @@ import { Separator } from "@/components/ui/separator";
 import { getServerSession } from "next-auth";
 import Chat from "./components/Chat";
 import { neon } from "@neondatabase/serverless";
+import PreviousChats from "@/app/components/PreviousChats";
 
 export default async function Home() {
   const session = await getServerSession();
@@ -17,6 +18,8 @@ export default async function Home() {
       )}
       {session?.user?.name && (
         <>
+          <PreviousChats />
+          <h4 className="mt-5 text-2xl font-bold">New Chat Session</h4>
           <Separator className="my-5" />
           <Chat />
         </>
